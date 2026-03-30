@@ -21,7 +21,15 @@
     "paths": {
       "@/*": ["./*"]
     }
+    // ❌ Do NOT add "typeRoots" unless you want to override default types
+    // Next.js auto-detects .d.ts files under "include"
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "types/**/*.d.ts" // ✅ Add this line to include your custom types
+  ],
   "exclude": ["node_modules"]
 }

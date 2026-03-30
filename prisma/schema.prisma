@@ -21,9 +21,11 @@ model User{
   provider    Provider
   
 
-  Stream      Stream[]
+  streams      Stream[]
 
-  Upvote      Upvote[]
+  upvotes     Upvote[]
+
+
 }
 
 enum Provider{
@@ -44,22 +46,32 @@ model Stream{
                  
   BigImg         String      @default("")
   active         Boolean     @default(true)
-  upvotes        Int
+  upvotes         Upvote[]
   userId         String
   user           User @relation(fields: [userId],references: [id])
- Upvote          Upvote[]
- 
+  
+
+
+  Currentstream Currentstream?
 }
 enum StreamType{
   spotify
   Youtube
 }
 
+
+model Currentstream{
+userId       String      @id
+streamId     String?     @unique
+stream       Stream?     @relation(fields: [streamId], references: [id])
+
+
+}
 model Upvote{
   id        String @id @default(uuid())
   userId    String
  streamId   String
  user       User @relation(fields: [userId],references: [id])
- stream     Stream @relation(fields: [streamId], references: [id])
- @@unique([userId ,streamId])
+ stream     Stream @relation(fields: [streamId], references: [id] , onDelete: Cascade)
+ @@unique([userId ,streamId] )
 } 
